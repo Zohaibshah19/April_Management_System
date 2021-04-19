@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LocationsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +17,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/forget-password', 'Auth\ForgotPasswordController@getEmail');
+Route::post('/forget-password', 'Auth\ForgotPasswordController@postEmail');
+
+Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@getPassword');
+Route::post('/reset-password', 'Auth\ResetPasswordController@updatePassword');
+Route::resource('categories','CategoryController');
+Route::resource('locations','LocationsController');
+Route::resource('severitys','SeveritysController');
+Route::resource('tasks','TasksController');
+Route::resource('designations','DesignationsController');
+Route::resource('employees','EmployeesController');
+
+
+//Route::get('/changeStatus',[LocationsController::class,'store',])->name('changeStatus');   
+
+// Route::get('/forgot_password','ForgotPasswordController@forgot');
+// Route::post('/forgot_password','ForgotPasswordController@password');
+
+Auth::routes();
+
+
+

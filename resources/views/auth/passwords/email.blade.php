@@ -1,6 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.login')
 
 @section('content')
+
+
+  <div class="login-logo">
+    <a href="../../index2.html"><b>Admin</b>LTE</a>
+  </div>
+  
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -14,7 +20,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="{{url('/forget-password')}}">
                         @csrf
 
                         <div class="form-group row">
@@ -23,11 +29,14 @@
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
+                                <div>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                </div>
+
                             </div>
                         </div>
 
@@ -37,11 +46,16 @@
                                     {{ __('Send Password Reset Link') }}
                                 </button>
                             </div>
+                          
+                                  
+                                
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
