@@ -14,7 +14,7 @@ class AddUserRoleToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('user_role');
+            $table->string('user_role')->nullable();
         });
     }
 

@@ -48,7 +48,7 @@ class EmployeesController extends Controller
         //dd($request->all());
         $request->validate([
             'name'=>'required',
-            'email'=>'required|unique:employees',
+            'email'=>'required|unique:users',
             'password'=>'required|min:6',
             'confirm_password' => 'required|same:password',
             'user_role'=>'required',
@@ -69,6 +69,7 @@ class EmployeesController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'user_role' => $request->get('user_role'),
+            'designation_id' => $request->get('designation_id'),
             'status' => $request->get('status'),
 
          ],

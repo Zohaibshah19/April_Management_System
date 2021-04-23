@@ -9,6 +9,6 @@ class Designation extends Model
     protected $fillable =['title','status'];
 
     public function employeeDesignation(){
-        return $this->hasOne(Employee::class,'designation_id');
+        return $this->hasOne(User::class,'designation_id');
     }
 }

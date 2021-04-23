@@ -14,7 +14,7 @@ class AddDesignationIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('designation_id');
+            $table->unsignedBigInteger('designation_id')->nullable();
             
             $table->foreign('designation_id')->references('id')->on('designations');
         });

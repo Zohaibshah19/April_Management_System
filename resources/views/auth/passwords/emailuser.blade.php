@@ -7,5 +7,6 @@
 <p> Email: {{ $email }} </p>
 <p> Fullname: {{ $name }} </p>
 <p> User Role: {{ $user_role }} </p>
+<p> Designation: {{$designation_id}} </p>
 <p> Status: {{ $status }} </p>
 
