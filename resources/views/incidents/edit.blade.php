@@ -97,13 +97,18 @@
                 <label>Select Status</label>
                 
                 <select class="form-control @if($errors->has('status')) is-invalid @endif" style="width: 100%;" name='status' value="{{$incident->status}}">
-                <option class="default disabled selected">Choose Status</option>
+                
                     @if($stat)
                     @foreach($stat as $item)
+                    @if($item == $incident->status)
+                    <option value="{{$item}}" selected>{{$item}}</option>
+                        @else
                     <option value="{{$item}}">{{$item}}</option>
-                    <span style="color:red">@error('status'){{$message}}@enderror</span>
+                        @endif
                     
                     @endforeach
+                    
+                  
                     @endif
 
 
@@ -122,13 +127,17 @@
                   <select class="form-control @if($errors->has('severity_id')) is-invalid @endif" style="width: 100%;" name='severity_id'>
                   <option class="default disabled selected">Choose Severity</option>
                     @foreach($data as $item)
-                    <option  id='severity_id' value="{{$item->id}}">{{$item->title}}</option>
+                    <option  id='severity_id' value="{{$item->id}}"{{ $item->id == $incident->severity_id ? 'selected="selected"' : '' }}>{{$item->title}}</option>
                     <span style="color:red">@error('severity_id'){{$message}}@enderror</span>
                     
                     @endforeach
            
                   </select> 
                   </div>
+
+
+
+                  
 
                   <div class="col-md-12">
                   
@@ -152,7 +161,7 @@
 
              <div class="form-group">
         <label for="description"> Description</label>
-        <textarea name="description" id="description"  type="text" class="form-control" placeholder="Enter Description" value="{{$incident->description}}"></textarea>
+        <textarea name="description" id="description"  type="text" class="form-control" placeholder="Enter Description" value="{{$incident->description}}">{{$incident->description}}</textarea>
         @error('description')
         <p style="color:red">{{$message}}</p>
         @enderror

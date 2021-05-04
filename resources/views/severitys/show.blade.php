@@ -15,8 +15,14 @@
    
     <h5 class="card-title"><b>Title: {{$severity->title}}</b></h5></br>
     <h5 class="card-title">Due Date: {{$severity->due_date}}</h5></br>
-    <h5 class="card-title">Status: {{$severity->status}}</h5></br>
-   
+    @if ($severity->status==1)
+                    
+                    <td class="align-middle">Status: Active</td>    
+                 
+                @elseif($severity->status==0)  
+                    <td class="align-middle">Status: Inactive</td> 
+                  
+                @endif   
   </div>
 
 

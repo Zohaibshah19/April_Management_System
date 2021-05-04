@@ -45,13 +45,12 @@ class TasksController extends Controller
         $request->validate([
             'name'=>'required',
             'description'=>'required',
-            'category_id'=>'required',
+            'category_id'=>'required|not_in:Select Category',
             
 
         ],[
             'name.required'=>'Please Enter the Name..',
             'description.required'=>'Please Enter description',
-            'category_id.required'=>'Please Select the Category',
            
             
 
@@ -127,12 +126,12 @@ class TasksController extends Controller
         $request->validate([
             'name'=>'required',
             'description'=>'required',
-            'category_id'=>'required',
+            
         
         ],[
             'name.required'=>'Please Enter the Name..',
             'description.required'=>'Please Enter Section',
-            'category_id.required'=>'Please Enter Teacher Name',
+          
           
         ]
         

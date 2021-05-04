@@ -2,6 +2,25 @@
 @extends('layouts.admin')
 @section('content')
 
+
+<style>
+      /* apply CSS to the select tag of 
+         .dropdown-container div*/
+  
+      .dropdown-container select {
+        /* for Firefox */
+        -moz-appearance: none;
+        /* for Safari, Chrome, Opera */
+        -webkit-appearance: none;
+      }
+  
+      /* for IE10 */
+      .dropdown-container select::-ms-expand {
+        display: none;
+      }
+    </style>
+
+
 <div class="container-fluid">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -83,13 +102,13 @@
 
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-6 dropdown-container">
 
 
                 <label>Select User Role</label>
                 
-                <select class="form-control select2" style="width: 100%;" name='user_role'>
-                <option value="">-- Choose User Role --</option>
+                <select class="form-control select2 @if($errors->has('user_role')) is-invalid @endif" style="width: 100%;" name='user_role'>
+                <option class="default disabled selected">Choose User Role</option>
                     @if($roles)
                     @foreach($roles as $item)
                     <option value="{{$item}}">{{$item}}</option>
@@ -102,13 +121,13 @@
                   </select> 
                   </div>
            
-                  <div class="col-md-6">
+                  <div class="col-md-6 dropdown-container">
 
             
                 <label>Select Designation</label>
                 
-                  <select class="form-control select2" style="width: 100%;" name='designation_id'>
-                  <option value="">-- Choose Designation --</option>
+                  <select class="form-control select2 @if($errors->has('user_role')) is-invalid @endif" style="width: 100%;" name='designation_id'>
+                  <option class="default disabled selected">Choose Designation</option>
                     @foreach($data as $item)
                     <option  id='designation_id' value="{{$item->id}}">{{$item->title}}</option>
                     <span style="color:red">@error('designation_id'){{$message}}@enderror</span>

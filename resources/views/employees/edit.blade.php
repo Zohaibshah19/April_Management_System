@@ -88,11 +88,14 @@
                 <label>Select User Role</label>
                 
                 <select class="form-control select2" style="width: 100%;" name='user_role'>
-                <option value="">Select Role</option>
+               
                     @if($roles)
                     @foreach($roles as $item)
+                        @if($item == $employee->user_role)
+                    <option value="{{$item}}" selected>{{$item}}</option>
+                        @else
                     <option value="{{$item}}">{{$item}}</option>
-                    <span style="color:red">@error('designation_id'){{$message}}@enderror</span>
+                        @endif
                     
                     @endforeach
                     @endif
@@ -104,9 +107,9 @@
                 <label>Select Designation</label>
                
                   <select class="form-control select2" style="width: 100%;" name='designation_id'>
-                  <option value="">Select a Designation</option>
+                
                     @foreach($data as $item)
-                    <option  id='designation_id' value="{{$item->id}}">{{$item->title}}</option>
+                    <option  id='designation_id' value="{{$item->id}}"{{ $item->id == $employee->designation_id ? 'selected="selected"' : '' }}>{{$item->title}}</option>
                     <span style="color:red">@error('designation_id'){{$message}}@enderror</span>
                     
                     @endforeach

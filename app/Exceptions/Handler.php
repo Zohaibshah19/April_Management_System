@@ -51,5 +51,12 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
+
+        if($exception instanceof QueryException) {
+            if($exception->getCode() === '23000') {
+               return response()->json(['message' => "service cannot be deleted, because there is a data package (example 1, example, example3 ...) which has the same id_service, namely 26 (name_service)"], 500);
+            }
+         }
+         
     }
 }

@@ -121,8 +121,19 @@ class SeveritysController extends Controller
      */
     public function destroy($id)
     {
-        $severity = Severity::findOrFail($id);
-        $severity->delete();
-        return redirect()->route('severitys.index')->with('success','Deleted Successfully');
+        try {
+
+            $severity = Severity::findOrFail($id);
+            $severity->delete();
+            return redirect()->route('severitys.index')->with('success','Deleted Successfully');
+            
+         }
+         catch(\Illuminate\Database\QueryException $ex) {
+            if($ex->getCode() === '23000') {
+                return 'cannot delete this field';
+            } 
+         }
+         
+       
     }
 }

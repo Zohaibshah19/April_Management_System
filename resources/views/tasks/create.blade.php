@@ -2,6 +2,26 @@
 @extends('layouts.admin')
 @section('content')
 
+
+
+<style>
+      /* apply CSS to the select tag of 
+         .dropdown-container div*/
+  
+      .dropdown-container select {
+        /* for Firefox */
+        -moz-appearance: none;
+        /* for Safari, Chrome, Opera */
+        -webkit-appearance: none;
+      }
+  
+      /* for IE10 */
+      .dropdown-container select::-ms-expand {
+        display: none;
+      }
+    </style>
+
+
 <div class="container-fluid">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -48,22 +68,18 @@
                     <p style="color:red">{{$message}}</p>
                     @enderror
                   </div>
+                  </div>
 
+                  
 
-                <div class="form-group">
-                  <label for="section"> Description</label>
-                  <textarea name="description" id="description" class="form-control" rows="3" type="text" class="form-control" placeholder="Enter Description"></textarea>
-                  @error('description')
-                  <p style="color:red">{{$message}}</p>
-                  @enderror
-                </div>
 
             
+                <div class="col-md-6  dropdown-container">
                 <label>Select Category</label>
                 
                
-                  <select class="form-control select2" style="width: 100%;" name='category_id'>
-                  <option value="">select Category</option>
+                  <select class="form-control select2 @if($errors->has('category_id')) is-invalid @endif" style="width: 100%;" name='category_id'>
+                  <option class="default disabled selected">Select Category</option>
                     @foreach($data as $item)
                     
                     <option  id='category_id' value="{{$item->id}}">{{$item->name}}</option>
@@ -72,12 +88,26 @@
                     @endforeach
            
                   </select> 
-                  
+                  </div>
+
+                  <div class="col-md-6 ">
+
+                <div class="form-group">
+                  <label for="section"> Description</label>
+                  <textarea name="description" id="description" class="form-control" rows="3" type="text" class="form-control" placeholder="Enter Description"></textarea>
+                  @error('description')
+                  <p style="color:red">{{$message}}</p>
+                  @enderror
+                </div>
+                </div>
+
+                  <div class="col-md-6  dropdown-container">
 
                   <label for="status">Status</label>
                  
                  <div>
                        <input name="status" id="status"  class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" >
+                    </div>
                     </div>
 
 

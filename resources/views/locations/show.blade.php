@@ -14,7 +14,14 @@
     
    
     <h5 class="card-title"><b>Name: {{$location->name}}</b></h5></br>
-    <h5 class="card-title">Status: {{$location->status}}</h5></br>
+    @if ($location->status==1)
+                    
+                    <td class="align-middle">Status: Active</td>    
+                 
+                @elseif($location->status==0)  
+                    <td class="align-middle">Status: Inactive</td> 
+                  
+                @endif 
    
   </div>
 

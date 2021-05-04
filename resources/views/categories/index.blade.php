@@ -49,6 +49,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Status</th>
+                    <th>Parent Name</th>
                     <th>CRUD Operations</th>
 
                     
@@ -65,11 +66,12 @@
                             <td class="align-middle">Active</td>    
                          
                         @elseif($category->status==0)  
-                            <td class="align-middle">InActive</td> 
+                            <td class="align-middle">Inactive</td> 
                           
                         @endif   
                  
 
+                        <td class="align-middle">{{ !empty($category->parent) ? $category->parent->name : '' }}</td> 
 
                     <td class='align-middle'>
       <form action="{{route('categories.destroy',$category->id)}}" method="POST">

@@ -48,8 +48,24 @@
                     <p style="color:red">{{$message}}</p>
                     @enderror
                   </div>
+    </div>
+                  <div class="col-md-6">
+            
+            <label>Select Parent Category</label>
 
+            <select class="form-control select2 @if($errors->has('parent_id')) is-invalid @endif" style="width: 100%;" name='parent_id'>
+            <option class="default disabled selected">Choose Parent</option>
+                @foreach($data as $item)
+                <option  id='severity_id' value="{{$item->id}}"{{ $item->id == $category->parent_id ? 'selected="selected"' : '' }}>{{$item->name}}</option>
+                <span style="color:red">@error('parent_id'){{$message}}@enderror</span>
+                
+                @endforeach
 
+            </select> 
+
+</div>
+
+<div class="col-md-6">
                   <label for="status">Status</label>
                  
                   <div>
@@ -61,7 +77,7 @@
 @endif
 </div>
 
-    
+    </div>
               </div>
               <!-- /.col -->
              

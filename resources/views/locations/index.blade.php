@@ -69,7 +69,7 @@
                             <td class="align-middle">Active</td>    
                          
                         @elseif($location->status==0)  
-                            <td class="align-middle">InActive</td> 
+                            <td class="align-middle">Inactive</td> 
                           
                         @endif   
                  

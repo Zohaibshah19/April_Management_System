@@ -13,6 +13,10 @@ class Incident extends Model
         return $this->belongsTo(Severity::class);
     }
 
+    public function category(){
+        return $this->belongsTo(Categorie::class);
+    }
+
     // public function users(){
     //     return $this->belongsTo(User::class,'incidentusers');
     // }

@@ -20,7 +20,7 @@
                     <td class="align-middle">Active</td>    
                  
                 @elseif($employee->status==0)  
-                    <td class="align-middle">InActive</td> 
+                    <td class="align-middle">Inactive</td> 
                   
                 @endif     </h5></br>
 

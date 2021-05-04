@@ -120,8 +120,17 @@ class DesignationsController extends Controller
      */
     public function destroy($id)
     {
+        try{
         $designation = Designation::findOrFail($id);
         $designation->delete();
         return redirect()->route('designations.index')->with('success','Designation Deleted Successfully');
+    
     }
+    catch(\Illuminate\Database\QueryException $ex) {
+        if($ex->getCode() === '23000') {
+            return 'cannot delete this field';
+        }
+    
+    }
+}
 }

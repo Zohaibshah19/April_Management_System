@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<h1> Details </h1>
+
 
 @if($task)
 <div class="row pb-5">
@@ -13,6 +13,7 @@
     
     <h5 class="card-title"><b>Name: {{$task->name}}</b></h5></br>
     <h5 class="card-title">description: {{$task->description}}</h5></br>
+    <h5 class="card-title">Category: {{ !empty($task->category) ? $task->category->name : '' }}</h5></br> 
     <h5 class="card-title">Status:  @if ($task->status==1)
                     
                     <td class="align-middle">Active</td>    

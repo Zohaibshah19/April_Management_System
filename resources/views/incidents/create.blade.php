@@ -9,7 +9,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <style>
       /* apply CSS to the select tag of 
          .dropdown-container div*/
@@ -130,8 +130,31 @@
                   </select> 
                   </div>
 
+
+                  <div class="col-md-6 dropdown-container">
+                  <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control input-sm" name="category_id">
+                        <option value="">--select--</option>
+                        @foreach ($categories as $row)
+                            <option value="{{$row->id}}">{{$row->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                </div>
+
+                <div class="col-md-6 dropdown-container">
+                <div class="form-group" style="position:relative">
+                    <label>Sub-Category</label>
+                    <select class="form-control input-sm" name="subcategory_id"></select>
+                    <img id="loader" src="{{asset('/images/ajax-loader.gif')}}" alt="loader">
+                </div>
+                </div>
+
+
+
                   <div class="col-md-12">
-                  
+
                   <div class="form-group">
             <label>Select User(s) </label>
             
@@ -192,6 +215,8 @@
 </form>
 
 
+
+
         <!-- /.row -->
 
         <!-- /.row -->
@@ -202,6 +227,68 @@
     </section>
     <!-- /.content -->
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <style>
+        #loader {
+            position: absolute;
+            right: 18px;
+            top: 30px;
+            width: 20px;
+        }
+    </style>
+    <script>
+        $(function () {
+            var loader = $('#loader'),
+                category = $('select[name="category_id"]'),
+                subcategory = $('select[name="subcategory_id"]');
+
+            loader.hide();
+            subcategory.attr('disabled','disabled')
+
+            subcategory.change(function(){
+                var id = $(this).val();
+                if(!id){
+                    subcategory.attr('disabled','disabled')
+                }
+            })
+
+            category.change(function() {
+                var id= $(this).val();
+                if(id){
+                    loader.show();
+                    subcategory.attr('disabled','disabled')
+
+                    $.get('{{url('/dropdown-data?category_id=')}}'+id)
+                        .success(function(data){
+                            var s='<option value="">---select--</option>';
+                            data.forEach(function(row){
+                                s +='<option value="'+row.id+'">'+row.name+'</option>'
+                            })
+                            subcategory.removeAttr('disabled')
+                            subcategory.html(s);
+                            loader.hide();
+                        })
+                }
+
+            })
+        })
+    </script>
+
+
+
+
 
 
 @endsection

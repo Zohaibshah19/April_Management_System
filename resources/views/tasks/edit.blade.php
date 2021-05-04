@@ -65,34 +65,44 @@
                     <p style="color:red">{{$message}}</p>
                     @enderror
                   </div>
-
-
-                  <div class="form-group">
-                  <label for="section"> Description</label>
-                  <input type="text" class="form-control" name="description" id="description" value="{{$task->description}}" placeholder="Enter Description">
-                  @error('section')
-                  <p style="color:red">{{$message}}</p>
-                  @enderror
-                </div>
-
+</div>
+                 
             
+                <div class="col-md-6 ">
                 <label>Select Category</label>
                   <select class="form-control select2" style="width: 100%;" name='category_id'>
-                  <option value="">--Select Category</option>
+                 
                     @foreach($data as $item)
                    
-                    <option  id='category_id' value="{{$item->id}}">{{$item->name}}</option>
+                    <option  id='category_id' value="{{$item->id}}"{{ $item->id == $task->category_id ? 'selected="selected"' : '' }}>{{$item->name}}</option>
                     <span style="color:red">@error('category_id'){{$message}}@enderror</span>
                     @endforeach
            
                   </select> 
+                  </div>
 
+                  <div class="col-md-6 ">
 
+                    <div class="form-group">
+                    <label for="section"> Description</label>
+                    <textarea type="text" class="form-control" name="description" id="description" value="{{$task->description}}" placeholder="Enter Description">{{$task->description}}</textarea>
+                    @error('section')
+                    <p style="color:red">{{$message}}</p>
+                    @enderror
+                    </div>
+                    </div>
+
+                  <div class="col-md-6 ">
                   <label for="status">Status</label>
                  
-                 <div>
-                       <input name="status" id="status"  class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" >
-                    </div>
+                  <div>
+
+                    @if($task->status==1)
+                    <input name="status" id="status"  class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked>
+                    @elseif($task->status==0)
+                    <input name="status" id="status"  class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" >
+                    @endif
+        </div>
 
 
                

@@ -27,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $data = Categorie::all();
+        return view('categories.create', ['data' => $data]);
     }
 
     /**
@@ -56,7 +57,14 @@ class CategoryController extends Controller
         $data->name = $request->name;
         $data->status = ($request->status === 'on' ) ? 1 : 0;
 
+        //$des = Categorie::find($request->parent_id);
+        
+        //$des->children()->save($data);
+       // $data->save();
+        $data->parent_id = $request->parent_id;
         $data->save();
+
+
         return redirect()->route('categories.index')->with('success',' Created Successfully');
         
 
@@ -81,7 +89,8 @@ class CategoryController extends Controller
      */
     public function edit(Categorie $category)
     {
-        return view('categories.edit', compact('category'));
+        $data = Categorie::all();
+        return view('categories.edit',['data'=>$data], compact('category'));
     }
 
     /**
@@ -108,6 +117,7 @@ class CategoryController extends Controller
 
         $category->name = $request->name;
         $category->status = ($request->status === 'on' ) ? 1 : 0;
+        $category->parent_id= $request->parent_id;
         $category->update();
         return redirect()->route('categories.index')->with('success',' Updated Successfully');
     }
@@ -120,8 +130,19 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        try{
         $category = Categorie::findOrFail($id);
         $category->delete();
         return redirect()->route('categories.index')->with('success','Category Deleted Successfully');
+        }
+        catch(\Illuminate\Database\QueryException $ex) {
+            if($ex->getCode() === '23000') {
+                return 'cannot delete this field';
+            } 
+         }
+
+    
     }
+
+    
 }

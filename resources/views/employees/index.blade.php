@@ -56,8 +56,6 @@
                     <th>Status</th>
                     
                     <th>CRUD operation</th>
-
-
                   </tr>
                   </thead>
                   @if($employees)
@@ -76,7 +74,7 @@
                             <td class="align-middle">Active</td>    
                          
                         @elseif($emp->status==0)  
-                            <td class="align-middle">InActive</td> 
+                            <td class="align-middle">Inactive</td> 
                           
                         @endif           
 

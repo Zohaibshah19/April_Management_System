@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Incident;
 use App\Severity;
+use App\Categorie;
 use App\User;
 use Mail;
 use Auth;
@@ -31,13 +32,32 @@ class IncidentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        
+       // $category_id = $request->category_id;
+    //$emails = User::whereIn('id', $user_id)->get('email');
+   // $em = Categorie::whereIn('parent_id', $category_id)->get()->pluck('parent_id'); 
+
+        $categories = Categorie::where('parent_id',null)->get();
+
         $stat=['Open','Close','inProgress'];
         $data = Severity::all();
         $dat = User::all();
-        return view('incidents.create', ['data' => $data,'dat' => $dat],compact('stat'));
+        $da = Categorie::all();
+        return view('incidents.create', ['data' => $data,'dat' => $dat, 'da' => $da],compact('stat','categories'));
     }
+    
+    public function data(Request $request){
+
+        if($request->has('category_id')){
+            $parentId = $request->get('category_id');
+            $data = Categorie::where('parent_id',$parentId)->get();
+            return ['success'=>true,'data'=>$data];
+        }
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,7 +67,19 @@ class IncidentsController extends Controller
      */
     public function store(Request $request)
     {
-       
+    //dd($request->all());
+       // $user_id = $request->user_id;
+        //$emails = User::whereIn('id', $user_id)->get();   
+    
+       // $emails = User::whereIn('id', $user_id)->get()->pluck('email')->toArray();   
+
+        //dd($emails[0]->email);
+      //   dd($emails);
+
+
+        //dd(User::pluck('email')->toArray());
+         //dd($emails);
+
         //d($request->user());
         //dd( User::with('name')->get());
         // $user = User::where('id',1)->with(['email'])->first();
@@ -60,29 +92,32 @@ class IncidentsController extends Controller
             'start_date'=>'required',
             'description' => 'required',
             'status' => 'required|not_in:Choose Status',
-
             'user_id'=>'required',
             'severity_id'=>'required|not_in:Choose Severity',
             
 
         ],
-        
+
     );
 
-
-    //     $subject=$request->user()->email;
-    //     Mail::send('auth.passwords.emailmulusers', [
-    //         'subject' => $request->get('subject'),
-    //         'status' => $request->get('status'),
-    //         'start_date' => $request->get('start_date'),
-    //         'description' => $request->get('description'),
-    //      ],
+    $user_id = $request->user_id;
+    //$emails = User::whereIn('id', $user_id)->get('email');
+    $em = User::whereIn('id', $user_id)->get()->pluck('email')->toArray(); 
+    //$em = $emails[0]->email;
+//$em = User::pluck('email')->toArray();
+       // $subject=$request->user()->email;
+        Mail::send('auth.passwords.emailmulusers', [
+            'subject' => $request->get('subject'),
+            'status' => $request->get('status'),
+            'start_date' => $request->get('start_date'),
+            'description' => $request->get('description'),
+         ],
          
-    //         function ($message) use ($subject){
-    //                 $message->from('zohaib.shah833786@gmail.com');
-    //                 $message->to($subject)
-    //                 ->subject('Welcome User');
-    // });
+            function ($message) use ($em){
+                    $message->from('zohaib.shah833786@gmail.com');
+                    $message->to($em)
+                    ->subject('Welcome User');
+    });
 
         $data= new Incident;
         $data->subject = $request->subject;
@@ -181,8 +216,15 @@ class IncidentsController extends Controller
      */
     public function destroy($id)
     {
+        try{
         $incident = Incident::findOrFail($id);
         $incident->delete();
         return redirect()->route('incidents.index')->with('success','Incident Deleted Successfully');
+    }
+        catch(\Illuminate\Database\QueryException $ex) {
+            if($ex->getCode() === '23000') {
+                return 'cannot delete this field';
+            } 
+         }
     }
 }

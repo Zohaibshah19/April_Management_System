@@ -33,7 +33,10 @@ Route::resource('severitys','SeveritysController');
 Route::resource('tasks','TasksController');
 Route::resource('designations','DesignationsController');
 Route::resource('employees','EmployeesController');
+
 Route::resource('incidents','IncidentsController');
+Route::get('/dropdown','IncidentsController@index');
+Route::get('/dropdown-data','IncidentsController@data');
 
 
 //Route::get('/changeStatus',[LocationsController::class,'store',])->name('changeStatus');   

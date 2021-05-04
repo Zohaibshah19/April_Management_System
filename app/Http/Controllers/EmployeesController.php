@@ -45,14 +45,14 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        //dd($request->email);
         $request->validate([
             'name'=>'required',
             'email'=>'required|unique:users',
             'password'=>'required|min:6',
             'confirm_password' => 'required|same:password',
-            'user_role'=>'required',
-            'designation_id'=>'required',
+            'user_role'=>'required|not_in:Choose User Role',
+            'designation_id'=>'required|not_in:Choose Designation',
             
 
         ],[
@@ -172,8 +172,15 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
+        try{
         $employee = User::findOrFail($id);
         $employee->delete();
         return redirect()->route('employees.index')->with('success','User Deleted Successfully');
+    }
+        catch(\Illuminate\Database\QueryException $ex) {
+            if($ex->getCode() === '23000') {
+                return 'cannot delete this field';
+            } 
+         }
     }
 }
